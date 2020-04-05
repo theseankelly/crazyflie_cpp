@@ -1,26 +1,10 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.10.2)
 project(crazyflie_cpp)
-find_package(catkin)
+find_package(ament_cmake REQUIRED)
+
+set(CMAKE_CXX_STANDARD 14)
 
 find_library(USB_LIB usb-1.0)
-# Enable C++11
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-
-###################################
-## catkin specific configuration ##
-###################################
-## The catkin_package macro generates cmake config files for your package
-## Declare things to be passed to dependent projects
-## INCLUDE_DIRS: uncomment this if you package contains header files
-## LIBRARIES: libraries you create in this project that dependent projects also need
-## CATKIN_DEPENDS: catkin_packages dependent projects also need
-## DEPENDS: system dependencies of this project that dependent projects also need
-catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES crazyflie_cpp
-  CATKIN_DEPENDS
-  DEPENDS ${USB_LIB}
-)
 
 ###########
 ## Build ##
@@ -55,6 +39,11 @@ install(TARGETS
   crazyflie_cpp
   DESTINATION lib/${PROJECT_NAME}
   PUBLIC_HEADER DESTINATION include/${PROJECT_NAME})
+
+## Register the ament package
+ament_export_include_directories(include)
+ament_package()
+
 #############
 ## Install ##
 #############
