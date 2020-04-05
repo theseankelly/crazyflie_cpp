@@ -46,6 +46,15 @@ target_link_libraries(crazyflie_cpp
   ${USB_LIB}
 )
 
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION include/${PROJECT_NAME}
+  FILES_MATCHING PATTERN "*.h"
+  PATTERN ".git" EXCLUDE)
+
+install(TARGETS
+  crazyflie_cpp
+  DESTINATION lib/${PROJECT_NAME}
+  PUBLIC_HEADER DESTINATION include/${PROJECT_NAME})
 #############
 ## Install ##
 #############
