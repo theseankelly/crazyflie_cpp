@@ -16,7 +16,7 @@ include_directories(
 )
 
 ## Declare a cpp library
-add_library(crazyflie_cpp
+add_library(crazyflie_cpp SHARED
   src/USBDevice.cpp
   src/Crazyradio.cpp
   src/CrazyflieUSB.cpp
@@ -35,13 +35,19 @@ install(DIRECTORY include/${PROJECT_NAME}/
   FILES_MATCHING PATTERN "*.h"
   PATTERN ".git" EXCLUDE)
 
-install(TARGETS
-  crazyflie_cpp
-  DESTINATION lib/${PROJECT_NAME}
-  PUBLIC_HEADER DESTINATION include/${PROJECT_NAME})
+install(
+  TARGETS ${PROJECT_NAME}
+  EXPORT export_${PROJECT_NAME}
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION bin
+)
 
 ## Register the ament package
 ament_export_include_directories(include)
+ament_export_interfaces(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
+ament_export_libraries(${PROJECT_NAME})
 ament_package()
 
 #############
